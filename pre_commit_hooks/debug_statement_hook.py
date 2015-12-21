@@ -39,7 +39,7 @@ def check_file_for_debug_statements(filename):
     except SyntaxError:
         print('{0} - Could not parse ast'.format(filename))
         print()
-        print('\t' + traceback.format_exc().replace('\n', '\n\t'))
+        print(b'\t' + traceback.format_exc().replace(b'\n', b'\n\t'))
         print()
         return 1
     visitor = ImportStatementParser()
