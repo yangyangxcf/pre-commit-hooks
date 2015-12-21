@@ -5,7 +5,7 @@ from __future__ import unicode_literals
 import argparse
 import io
 
-expected_pragma = b'# -*- coding: utf-8 -*-\n'
+expected_pragma = b'# coding: utf-8\n'
 
 
 def has_coding(line):
