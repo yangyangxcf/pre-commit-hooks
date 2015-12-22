@@ -28,6 +28,7 @@ setup(
     install_requires=[
         # quickfix to prevent pep8 conflicts
         'flake8',
+        'flake8-respect-noqa',
         'argparse',
         'autopep8>=1.1',
         'pyyaml',
