@@ -21,13 +21,13 @@ def check_ast(argv=None):
     for filename in args.filenames:
 
         try:
-            ast.parse(io.open(filename, encoding='utf8').read(), filename=filename)
+            ast.parse(io.open(filename, 'rb').read(), filename=filename)
         except SyntaxError:
-            print('{0}: failed parsing with {1}:'.format(
+            print(b'{0}: failed parsing with {1}:'.format(
                 filename, interpreter,
             ))
-            print('\n{0}'.format(
-                '    ' + traceback.format_exc().replace('\n', '\n    ')
+            print(b'\n{0}'.format(
+                b'    ' + traceback.format_exc().replace(b'\n', b'\n    ')
             ))
             retval = 1
     return retval
