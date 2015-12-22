@@ -19,7 +19,7 @@ def test_integration_inserting_pragma(tmpdir):
 
     with open(file_path, 'rb') as file_obj:
         assert file_obj.read() == (
-            b'# -*- coding: utf-8 -*-\n'
+            b'# coding: utf-8\n'
             b'import httplib\n'
         )
 
@@ -27,7 +27,7 @@ def test_integration_inserting_pragma(tmpdir):
 def test_integration_ok(tmpdir):
     file_path = tmpdir.join('foo.py').strpath
     with open(file_path, 'wb') as file_obj:
-        file_obj.write(b'# -*- coding: utf-8 -*-\nx = 1\n')
+        file_obj.write(b'# coding: utf-8\nx = 1\n')
     assert main([file_path]) == 0
 
 
@@ -35,10 +35,10 @@ def test_integration_ok(tmpdir):
     'input_str',
     (
         b'',
-        b'# -*- coding: utf-8 -*-\n',
+        b'# coding: utf-8\n',
         (
             b'#!/usr/bin/env python\n'
-            b'# -*- coding: utf-8 -*-\n'
+            b'# coding: utf-8\n'
             b'foo = "bar"\n'
         ),
     )
@@ -55,23 +55,23 @@ def test_ok_inputs(input_str):
     (
         (
             b'import httplib\n',
-            b'# -*- coding: utf-8 -*-\n'
+            b'# coding: utf-8\n'
             b'import httplib\n',
         ),
         (
             b'#!/usr/bin/env python\n',
             b'#!/usr/bin/env python\n'
-            b'# -*- coding: utf-8 -*-\n'
+            b'# coding: utf-8\n'
         ),
         (
             b'#coding=utf-8\n',
-            b'# -*- coding: utf-8 -*-\n'
+            b'# coding: utf-8\n'
         ),
         (
             b'#!/usr/bin/env python\n'
             b'#coding=utf8\n',
             b'#!/usr/bin/env python\n'
-            b'# -*- coding: utf-8 -*-\n',
+            b'# coding: utf-8\n',
         ),
     )
 )

@@ -20,7 +20,7 @@ def f1_is_a_conflict_file(in_tmpdir):
     # Make a merge conflict
     cmd_output('git', 'init', 'repo1')
     with cwd('repo1'):
-        io.open('f1', 'w').close()
+        io.open('f1', 'w', encoding='utf8').close()
         cmd_output('git', 'add', 'f1')
         cmd_output('git', 'commit', '-m' 'commit1')
 
@@ -37,7 +37,7 @@ def f1_is_a_conflict_file(in_tmpdir):
         cmd_output('git', 'commit', '-am', 'clone commit2')
         cmd_output('git', 'pull', retcode=None)
         # We should end up in a merge conflict!
-        assert io.open('f1').read().startswith(
+        assert io.open('f1', encoding='utf8').read().startswith(
             '<<<<<<< HEAD\n'
             'child\n'
             '=======\n'
@@ -53,7 +53,7 @@ def repository_is_pending_merge(in_tmpdir):
     # Make a (non-conflicting) merge
     cmd_output('git', 'init', 'repo1')
     with cwd('repo1'):
-        io.open('f1', 'w').close()
+        io.open('f1', 'w', encoding='utf8').close()
         cmd_output('git', 'add', 'f1')
         cmd_output('git', 'commit', '-m' 'commit1')
 
@@ -71,8 +71,8 @@ def repository_is_pending_merge(in_tmpdir):
         cmd_output('git', 'commit', '-m', 'clone commit2')
         cmd_output('git', 'pull', '--no-commit')
         # We should end up in a pending merge
-        assert io.open('f1').read().startswith('parent\n')
-        assert io.open('f2').read().startswith('child\n')
+        assert io.open('f1', encoding='utf8').read().startswith('parent\n')
+        assert io.open('f2', encoding='utf8').read().startswith('child\n')
         assert os.path.exists(os.path.join('.git', 'MERGE_HEAD'))
         yield
 
@@ -102,6 +102,6 @@ def test_merge_conflicts_ok(ok_contents):
 
 @pytest.mark.usefixtures('in_tmpdir')
 def test_does_not_care_when_not_in_a_merge():
-    with io.open('README.md', 'w') as readme_file:
+    with io.open('README.md', 'w', encoding='utf8') as readme_file:
         readme_file.write('problem\n=======\n')
     assert detect_merge_conflict(['README.md']) == 0

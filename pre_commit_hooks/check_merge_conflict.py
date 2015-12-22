@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import argparse
+import io
 import os.path
 import sys
 
@@ -30,7 +31,7 @@ def detect_merge_conflict(argv=None):
 
     retcode = 0
     for filename in args.filenames:
-        with open(filename) as inputfile:
+        with io.open(filename, encoding='utf8') as inputfile:
             for i, line in enumerate(inputfile):
                 for pattern in CONFLICT_PATTERNS:
                     if line.startswith(pattern):

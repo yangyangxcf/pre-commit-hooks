@@ -1,5 +1,7 @@
-import pytest
+import io
 import tempfile
+
+import pytest
 
 from pre_commit_hooks.pretty_format_json import pretty_format_json
 from testing.util import get_resource_path
@@ -18,7 +20,7 @@ def test_autofix_pretty_format_json():
     toformat_file = tempfile.NamedTemporaryFile(delete=False, mode='w+')
 
     # copy our file to format there
-    model_file = open(get_resource_path('not_pretty_formatted_json.json'), 'r')
+    model_file = io.open(get_resource_path('not_pretty_formatted_json.json'), 'r', encoding='utf8')
     model_contents = model_file.read()
     model_file.close()
 

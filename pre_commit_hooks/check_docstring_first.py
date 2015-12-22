@@ -57,7 +57,7 @@ def main(argv=None):
     retv = 0
 
     for filename in args.filenames:
-        contents = io.open(filename).read()
+        contents = io.open(filename, encoding='utf8').read()
         retv |= check_docstring_first(contents, filename=filename)
 
     return retv

@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import argparse
+import io
 import sys
 
 import simplejson
@@ -10,13 +11,14 @@ def _get_pretty_format(contents, indent):
     return simplejson.dumps(
         simplejson.loads(contents),
         sort_keys=True,
-        indent=indent
+        indent=indent,
+        ensure_ascii=False
     ) + "\n"  # dumps don't end with a newline
 
 
 def _autofix(filename, new_contents):
     print("Fixing file {0}".format(filename))
-    with open(filename, 'w') as f:
+    with io.open(filename, 'w', encoding='utf8') as f:
         f.write(new_contents)
 
 
@@ -42,14 +44,13 @@ def pretty_format_json(argv=None):
 
     for json_file in args.filenames:
         try:
-            f = open(json_file, 'r')
+            f = io.open(json_file, 'r', encoding='utf8')
             contents = f.read()
             f.close()
 
             pretty_contents = _get_pretty_format(contents, args.indent)
 
             if contents != pretty_contents:
-                print("File {0} is not pretty-formatted".format(json_file))
 
                 if args.autofix:
                     _autofix(json_file, pretty_contents)

@@ -2,6 +2,7 @@ from __future__ import print_function
 from __future__ import unicode_literals
 
 import argparse
+import io
 import os
 
 from six.moves import configparser  # pylint: disable=import-error
@@ -28,7 +29,7 @@ def check_file_for_aws_keys(filenames, keys):
     bad_files = []
 
     for filename in filenames:
-        with open(filename, 'r') as content:
+        with io.open(filename, 'r', encoding='utf8') as content:
             text_body = content.read()
             if any(key in text_body for key in keys):
                 # naively match the entire file, low chance of incorrect collision

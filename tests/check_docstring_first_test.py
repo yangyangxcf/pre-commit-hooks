@@ -60,7 +60,7 @@ def test_unit(capsys, contents, expected, expected_out):
 @all_tests
 def test_integration(tmpdir, capsys, contents, expected, expected_out):
     tmpfilename = tmpdir.join('test.py').strpath
-    with io.open(tmpfilename, 'w') as tmpfile:
+    with io.open(tmpfilename, 'w', encoding='utf8') as tmpfile:
         tmpfile.write(contents)
 
     assert main([tmpfilename]) == expected

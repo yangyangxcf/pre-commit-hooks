@@ -2,6 +2,7 @@ from __future__ import absolute_import
 from __future__ import print_function
 from __future__ import unicode_literals
 
+import io
 import textwrap
 
 import pytest
@@ -42,7 +43,7 @@ TESTS = (
 def test_rewrite(input_s, output, expected_retval, tmpdir):
     tmpfile = tmpdir.join('file.txt')
 
-    with open(tmpfile.strpath, 'w') as f:
+    with io.open(tmpfile.strpath, 'w', encoding='utf8') as f:
         f.write(input_s)
 
     retval = main([tmpfile.strpath])

@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 import argparse
 import ast
 import collections
+import io
 import traceback
 
 
@@ -35,7 +36,7 @@ class ImportStatementParser(ast.NodeVisitor):
 
 def check_file_for_debug_statements(filename):
     try:
-        ast_obj = ast.parse(open(filename).read(), filename=filename)
+        ast_obj = ast.parse(io.open(filename, encoding='utf8').read(), filename=filename)
     except SyntaxError:
         print('{0} - Could not parse ast'.format(filename))
         print()

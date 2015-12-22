@@ -1,6 +1,7 @@
 from __future__ import print_function
 
 import argparse
+import io
 import sys
 
 import yaml
@@ -20,7 +21,7 @@ def check_yaml(argv=None):
     retval = 0
     for filename in args.filenames:
         try:
-            yaml.load(open(filename), Loader=Loader)
+            yaml.load(io.open(filename, encoding='utf8'), Loader=Loader)
         except yaml.YAMLError as exc:
             print(exc)
             retval = 1

@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 
 import argparse
 import ast
+import io
 import os.path
 import sys
 import traceback
@@ -20,13 +21,13 @@ def check_ast(argv=None):
     for filename in args.filenames:
 
         try:
-            ast.parse(open(filename, 'rb').read(), filename=filename)
+            ast.parse(io.open(filename, encoding='utf8').read(), filename=filename)
         except SyntaxError:
-            print(b'{0}: failed parsing with {1}:'.format(
+            print('{0}: failed parsing with {1}:'.format(
                 filename, interpreter,
             ))
-            print(b'\n{0}'.format(
-                '    ' + traceback.format_exc().replace(b'\n', b'\n    ')
+            print('\n{0}'.format(
+                '    ' + traceback.format_exc().replace('\n', '\n    ')
             ))
             retval = 1
     return retval
